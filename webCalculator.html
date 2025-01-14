@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="calculator">
+      <div class="mainBox">
+        <div class="calContent">
+          <div>
+            <div class="innerBox">
+              <p>Loan Amount (in rupee)</p>
+              <input
+                type="number"
+                id="loanAmount"
+                name="loanAmount"
+                value="10000"
+                min="10000"
+                max="500000"
+                required
+                list="loanAmountSteps"
+                onkeydown="calculateEMI();"
+              />
+            </div>
+
+            <input
+              type="range"
+              class="range-slider grad"
+              id="loanAmountBar"
+              name="loanAmountBar"
+              min="10000"
+              max="500000"
+              step="1000"
+              value="10000"
+              oninput="updateLoanAmount(); calculateEMI();"
+            />
+          </div>
+          <div>
+            <div class="innerBox">
+              <p>Interest Rate (in %)</p>
+              <input
+                type="number"
+                id="interestRate"
+                name="interestRate"
+                value="9.5"
+                min="6"
+                max="38"
+                required
+                list="interestRateSteps"
+                onkeyup="calculateEMI();"
+              />
+            </div>
+            <input
+              class="form-range"
+              type="range"
+              id="interestRateBar"
+              name="interestRateBar"
+              min="6"
+              max="38"
+              step="0.1"
+              value="9.5"
+              oninput="updateInterestRate(); calculateEMI();"
+            />
+          </div>
+          <div>
+            <div class="innerBox">
+              <p>Loan Term (in months)</p>
+              <input
+                type="number"
+                id="loanTerm"
+                name="loanTerm"
+                value="12"
+                min="1"
+                max="72"
+                required
+                list="loanTermSteps"
+                onkeyup="calculateEMI();"
+              />
+            </div>
+            <input
+              class="form-range"
+              type="range"
+              id="loanTermBar"
+              name="loanTermBar"
+              min="1"
+              max="72"
+              step="1"
+              value="12"
+              oninput="updateLoanTerm(); calculateEMI();"
+            />
+          </div>
+        </div>
+        <div class="result">
+          <h3>Your EMI is</h3>
+          <div id="emiResult"></div>
+          <hr />
+          <div class="innerBox2">
+            <div>
+              <h3>Total Interest</h3>
+              <div id="totalInterestPayableResult"></div>
+            </div>
+
+            <div>
+              <h3>Total Amount Payment</h3>
+              <div id="totalPaymentResult"></div>
+            </div>
+          </div>
+          <div class="cta">
+            <a href="#">Apply Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
