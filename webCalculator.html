@@ -3,109 +3,269 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Loan EMI Calculator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      #loanAmount,
+      #loanTerm,
+      #interestRate,
+      #loanAmount:focus,
+      #loanTerm:focus,
+      #interestRate:focus {
+        background: transparent;
+        border-bottom: 1px solid #222 !important;
+        border-radius: 0px;
+        max-width: 100%;
+        padding: 0 0px 5px;
+        border-top: 0px;
+        border-right: 0px;
+        border-left: 0px;
+        /* width: 100%; */
+        font-size: 14px;
+        text-align: right;
+        font-size: 1vw;
+      }
+      #interestRateBar,
+      #loanAmountBar,
+      #loanTermBar {
+        /* background: #0386c8;
+      border: solid 0px #82cfd0;
+      border-radius: 8px;
+      height: 7px; */
+        height: 7px;
+        width: 100%;
+        /* outline: none;
+      transition: background 450ms ease-in;
+      -webkit-appearance: none;
+      padding: 0px; */
+      }
+      #interestRateBar::-webkit-slider-thumb,
+      #loanAmountBar::-webkit-slider-thumb,
+      #loanTermBar::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        -webkit-appearance: none;
+        cursor: ew-resize;
+        background: #fff;
+        border: 2px solid #000;
+      }
+      #emiResult,
+      #totalInterestPayableResult,
+      #totalPaymentResult {
+        font-size: 1.5vw;
+        font-weight: 500;
+        color: #fff;
+      }
+      #calculator {
+        padding: 5% 15%;
+      }
+      .mainBox {
+        display: flex;
+        width: 100%;
+        box-shadow: 1px 0px 11px 0px rgba(207, 205, 207, 1);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .calContent,
+      .result {
+        padding: 2rem;
+        width: 100%;
+      }
+      .calContent {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+      .result {
+        flex: 2;
+      }
+      .result {
+        background-color: #002953;
+        position: relative;
+      }
+      hr {
+        /* border: none; */
+        margin: 20px 0;
+        opacity: 0.4;
+      }
+      .result h3 {
+        margin-top: 20px;
+        color: #fff;
+        font-weight: 500;
+        font-size: 0.9vw;
+      }
+
+      .innerBox {
+        display: flex;
+      }
+      .innerBox p {
+        width: 100%;
+        font-size: 1vw;
+      }
+
+      .cta {
+        display: flex;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+      .cta a {
+        background-color: #0366d6;
+        padding: 10px 50px;
+        border-radius: 5px;
+        color: #fff;
+        text-decoration: none;
+        transition: 0.3s ease;
+      }
+      .cta a:hover {
+        background-color: #014ca3;
+      }
+      .innerBox2 {
+        display: flex;
+        gap: 30px;
+      }
+      @media (max-width: 520px) {
+        #calculator {
+          padding: 20px;
+        }
+        .mainBox {
+          flex-direction: column-reverse;
+        }
+        #emiResult,
+        #totalInterestPayableResult,
+        #totalPaymentResult {
+          font-size: 5.5vw;
+        }
+        #loanAmount,
+        #loanTerm,
+        #interestRate,
+        #loanAmount:focus,
+        #loanTerm:focus,
+        #interestRate:focus {
+          font-size: 3vw;
+        }
+        .innerBox p,
+        .result h3 {
+          width: 100%;
+          font-size: 4.5vw;
+          margin-top: 0;
+        }
+        .result {
+          padding: 1.5rem;
+        }
+        .cta a {
+          padding: 5px 20px;
+          font-size: 15px;
+        }
+        .innerBox2 {
+          flex-direction: column;
+          gap: 20px;
+        }
+        .cta {
+          display: flex;
+          justify-content: center;
+          margin-top: 1rem;
+        }
+        .calContent {
+          padding: 1rem;
+        }
+        .innerBox p {
+          font-size: 3vw;
+        }
+      }
+    </style>
   </head>
   <body>
     <section id="calculator">
       <div class="mainBox">
         <div class="calContent">
-          <div>
-            <div class="innerBox">
-              <p>Loan Amount (in rupee)</p>
-              <input
-                type="number"
-                id="loanAmount"
-                name="loanAmount"
-                value="10000"
-                min="10000"
-                max="500000"
-                required
-                list="loanAmountSteps"
-                onkeydown="calculateEMI();"
-              />
-            </div>
-
+          <div class="innerBox">
+            <p>Loan Amount (in rupee)</p>
             <input
-              type="range"
-              class="range-slider grad"
-              id="loanAmountBar"
-              name="loanAmountBar"
-              min="10000"
+              type="number"
+              id="loanAmount"
+              min="3000"
               max="500000"
-              step="1000"
-              value="10000"
-              oninput="updateLoanAmount(); calculateEMI();"
+              value="3000"
+              oninput="syncRange('loanAmount', 'loanAmountBar'); calculateEMI();"
             />
           </div>
-          <div>
-            <div class="innerBox">
-              <p>Interest Rate (in %)</p>
-              <input
-                type="number"
-                id="interestRate"
-                name="interestRate"
-                value="9.5"
-                min="6"
-                max="38"
-                required
-                list="interestRateSteps"
-                onkeyup="calculateEMI();"
-              />
-            </div>
+          <input
+            type="range"
+            id="loanAmountBar"
+            min="3000"
+            max="500000"
+            step="1000"
+            value="3000"
+            oninput="syncInput('loanAmountBar', 'loanAmount'); calculateEMI();"
+          />
+
+          <div class="innerBox">
+            <p>Interest Rate (in %)</p>
             <input
-              class="form-range"
-              type="range"
-              id="interestRateBar"
-              name="interestRateBar"
+              type="number"
+              id="interestRate"
               min="6"
               max="38"
               step="0.1"
               value="9.5"
-              oninput="updateInterestRate(); calculateEMI();"
+              oninput="syncRange('interestRate', 'interestRateBar'); calculateEMI();"
             />
           </div>
-          <div>
-            <div class="innerBox">
-              <p>Loan Term (in months)</p>
-              <input
-                type="number"
-                id="loanTerm"
-                name="loanTerm"
-                value="12"
-                min="1"
-                max="72"
-                required
-                list="loanTermSteps"
-                onkeyup="calculateEMI();"
-              />
-            </div>
+          <input
+            type="range"
+            id="interestRateBar"
+            min="6"
+            max="38"
+            step="0.1"
+            value="9.5"
+            oninput="syncInput('interestRateBar', 'interestRate'); calculateEMI();"
+          />
+
+          <div class="innerBox">
+            <p>Loan Term (in months)</p>
             <input
-              class="form-range"
-              type="range"
-              id="loanTermBar"
-              name="loanTermBar"
-              min="1"
+              type="number"
+              id="loanTerm"
+              min="3"
               max="72"
-              step="1"
               value="12"
-              oninput="updateLoanTerm(); calculateEMI();"
+              oninput="syncRange('loanTerm', 'loanTermBar'); calculateEMI();"
             />
           </div>
+          <input
+            type="range"
+            id="loanTermBar"
+            min="3"
+            max="72"
+            value="12"
+            oninput="syncInput('loanTermBar', 'loanTerm'); calculateEMI();"
+          />
         </div>
         <div class="result">
           <h3>Your EMI is</h3>
-          <div id="emiResult"></div>
+          <div id="emiResult">₹ 0.00</div>
           <hr />
           <div class="innerBox2">
             <div>
               <h3>Total Interest</h3>
-              <div id="totalInterestPayableResult"></div>
+              <div id="totalInterestPayableResult">₹ 0.00</div>
             </div>
-
             <div>
               <h3>Total Amount Payment</h3>
-              <div id="totalPaymentResult"></div>
+              <div id="totalPaymentResult">₹ 0.00</div>
             </div>
           </div>
           <div class="cta">
@@ -114,6 +274,56 @@
         </div>
       </div>
     </section>
-    <script src="script.js"></script>
+    <script>
+      window.onload = () => {
+        setLoanAmountFromURL();
+        calculateEMI();
+      };
+
+      const syncInput = (rangeId, inputId) => {
+        document.getElementById(inputId).value =
+          document.getElementById(rangeId).value;
+      };
+
+      const syncRange = (inputId, rangeId) => {
+        document.getElementById(rangeId).value =
+          document.getElementById(inputId).value;
+      };
+
+      const setLoanAmountFromURL = () => {
+        const url = window.location.href;
+        const match = url.match(/\/(\d+)-personal-loan\//);
+        console.log(match);
+        const loanAmount = Math.min(
+          Math.max(parseInt(match ? match[1] : 20000), 3000),
+          500000
+        );
+        document.getElementById("loanAmount").value = loanAmount;
+        document.getElementById("loanAmountBar").value = loanAmount;
+      };
+
+      const calculateEMI = () => {
+        const P = parseFloat(document.getElementById("loanAmount").value);
+        const r =
+          parseFloat(document.getElementById("interestRate").value) / 12 / 100;
+        const n = parseInt(document.getElementById("loanTerm").value);
+
+        if (P && r && n) {
+          const emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+          const totalPayment = emi * n;
+          const totalInterest = totalPayment - P;
+
+          document.getElementById("emiResult").textContent = `₹ ${emi.toFixed(
+            2
+          )}`;
+          document.getElementById(
+            "totalPaymentResult"
+          ).textContent = `₹ ${totalPayment.toFixed(2)}`;
+          document.getElementById(
+            "totalInterestPayableResult"
+          ).textContent = `₹ ${totalInterest.toFixed(2)}`;
+        }
+      };
+    </script>
   </body>
 </html>
